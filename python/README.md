@@ -4,7 +4,53 @@ As you may already recognize, JSON is quite similar to dictionaries in Python.
 Since JSON is the "language" for machinized exchanges of data, it is important
 to be able to retrieve, parse, and generate JSON using Python.
 
-## Example 1 - Simple Pull and Parse JSON
+## Example 1 - Read a JSON file and parse the tree
+
+There is a file in the `/data` directory of this repository named `book.json` with a single book entry in it. Let's read in that file and parse it using Python:
+
+```
+import os
+import json
+
+with open('../data/book.json','r') as file:
+  data = json.load(file)
+
+print(data['author'])
+print(data['genre'])
+
+for d in data['genres']:
+  print(d)
+
+file.close()
+```
+
+Note that the file contains only ONE entry, so no loops are required to immediately start fetching out Key-Value pairs.
+
+In the case of the array of `genres` tags, a for-loop is useful.
+
+### Another Example
+
+Take `data.json` in the `data/` directory. How do we parse a multi-entry object within the tree?
+
+```
+import json
+
+# Opening JSON file
+f = open('../data/data.json')
+
+# returns JSON object as a dict
+data = json.load(f)
+
+# Iterate through the array and fetch name
+for i in data['employees']:
+    print(i['name'])
+
+# Closing file
+f.close()
+```
+
+
+## Example 2 - Simple Pull and Parse JSON
 
 ```
 import requests
@@ -56,7 +102,7 @@ container
 main
 ```
 
-## Example 2 - Pull and Parse JSON with Error Handling
+## Example 3 - Pull and Parse JSON with Error Handling
 
 This includes a variety of possible errors: HTTP, ReadTimeout, Connection, and RequestException.
 Ideally any errors are logged to an external log file, not printed to the screen.
@@ -86,7 +132,7 @@ for r in response.json():
   print(r['name'])
 ```
 
-## Example 3 - Fabricate JSON from Pythonic Data Structures
+## Example 4 - Fabricate JSON from Pythonic Data Structures
 
 Take the Python dictionary below:
 
